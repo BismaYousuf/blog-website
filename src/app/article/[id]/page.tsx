@@ -105,43 +105,41 @@ export default function NowTrending() {
 
           {/* Trending Articles */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-            {articles.map((article, index) => (
-              <article key={index} className="w-full max-w-[330px]">
-                <div className="relative h-[254px] w-full mb-5">
-                  <Image
-                    src={article.image}
-                    alt={article.title}
-                    fill
-                    className="object-cover rounded-lg"
-                  />
+            <article key={currentSlide} className="w-full max-w-[330px]">
+              <div className="relative h-[254px] w-full mb-5">
+                <Image
+                  src={articles[currentSlide].image}
+                  alt={articles[currentSlide].title}
+                  fill
+                  className="object-cover rounded-lg"
+                />
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="text-[#4B4B4B] font-medium">{articles[currentSlide].category}</span>
+                  <span className="text-[#6E6E6E]">·</span>
+                  <span className="text-[#6E6E6E] font-medium">{articles[currentSlide].date}</span>
                 </div>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="text-[#4B4B4B] font-medium">{article.category}</span>
-                    <span className="text-[#6E6E6E]">·</span>
-                    <span className="text-[#6E6E6E] font-medium">{article.date}</span>
-                  </div>
-                  <h3 className="font-poppins text-lg font-bold text-[#313131]">
-                    {article.title}
-                  </h3>
-                  <p className="text-sm text-[#6E6E6E] line-clamp-3">
-                    {article.description}
-                  </p>
-                  <div className="flex items-center justify-between pt-4">
-                    <span className="text-sm text-[#6E6E6E] font-medium">
-                      {article.readTime}
-                    </span>
-                    <Link 
-                      href={`/blog/${article.slug}`} 
-                      className="inline-flex items-center gap-2 text-sm font-bold text-[#313131] hover:opacity-70 transition-opacity"
-                    >
-                      Read Full
-                      <ArrowRight className="w-5 h-5" />
-                    </Link>
-                  </div>
+                <h3 className="font-poppins text-lg font-bold text-[#313131]">
+                  {articles[currentSlide].title}
+                </h3>
+                <p className="text-sm text-[#6E6E6E] line-clamp-3">
+                  {articles[currentSlide].description}
+                </p>
+                <div className="flex items-center justify-between pt-4">
+                  <span className="text-sm text-[#6E6E6E] font-medium">
+                    {articles[currentSlide].readTime}
+                  </span>
+                  <Link 
+                    href={`/blog/${articles[currentSlide].slug}`} 
+                    className="inline-flex items-center gap-2 text-sm font-bold text-[#313131] hover:opacity-70 transition-opacity"
+                  >
+                    Read Full
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
                 </div>
-              </article>
-            ))}
+              </div>
+            </article>
           </div>
         </div>
 
@@ -173,26 +171,24 @@ export default function NowTrending() {
 
           {/* Short Read Articles */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-            {shortReads.map((article, index) => (
-              <article key={index} className="flex gap-4">
-                <div className="relative h-[100px] w-[144px] flex-shrink-0">
-                  <Image
-                    src={article.image}
-                    alt={article.title}
-                    fill
-                    className="object-cover rounded-lg"
-                  />
-                </div>
-                <div className="flex flex-col justify-center">
-                  <h3 className="font-poppins text-base font-medium text-[#020202] mb-2">
-                    {article.title}
-                  </h3>
-                  <p className="text-xs text-[#020202] opacity-50">
-                    {article.description}
-                  </p>
-                </div>
-              </article>
-            ))}
+            <article key={shortReadsSlide} className="flex gap-4">
+              <div className="relative h-[100px] w-[144px] flex-shrink-0">
+                <Image
+                  src={shortReads[shortReadsSlide].image}
+                  alt={shortReads[shortReadsSlide].title}
+                  fill
+                  className="object-cover rounded-lg"
+                />
+              </div>
+              <div className="flex flex-col justify-center">
+                <h3 className="font-poppins text-base font-medium text-[#020202] mb-2">
+                  {shortReads[shortReadsSlide].title}
+                </h3>
+                <p className="text-xs text-[#020202] opacity-50">
+                  {shortReads[shortReadsSlide].description}
+                </p>
+              </div>
+            </article>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import { addCommentToArticle, getArticleById } from "@/app/data/articles";
 
-export async function addComment(articleId: string, comment: { author: string; content: string }, metadata: any) {
+export async function addComment(articleId: string, comment: { author: string; content: string },) {
   try {
     // Wait for the comment to be added
     await addCommentToArticle(articleId, comment, ); // Added the third argument

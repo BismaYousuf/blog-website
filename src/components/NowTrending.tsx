@@ -71,9 +71,6 @@ const shortReads: ShortRead[] = [
 ]
 
 export default function NowTrending() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [shortReadsSlide, setShortReadsSlide] = useState(0)
-
   return (
     <section className="w-full bg-white py-20 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
@@ -83,63 +80,47 @@ export default function NowTrending() {
             <h2 className="font-poppins text-2xl font-semibold text-[#313131] tracking-wide">
               Now Trending
             </h2>
-            <div className="flex gap-4">
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-8 h-8 rounded-full border-2 border-[#282828] opacity-30 hover:opacity-100"
-                onClick={() => setCurrentSlide(prev => Math.max(0, prev - 1))}
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-8 h-8 rounded-full border-2 border-[#282828] hover:opacity-70"
-                onClick={() => setCurrentSlide(prev => Math.min(articles.length - 1, prev + 1))}
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
           </div>
 
           {/* Trending Articles */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-            <article key={currentSlide} className="w-full max-w-[330px]">
-              <div className="relative h-[254px] w-full mb-5">
-                <Image
-                  src={articles[currentSlide].image}
-                  alt={articles[currentSlide].title}
-                  fill
-                  className="object-cover rounded-lg"
-                />
-              </div>
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm">
-                  <span className="text-[#4B4B4B] font-medium">{articles[currentSlide].category}</span>
-                  <span className="text-[#6E6E6E]">·</span>
-                  <span className="text-[#6E6E6E] font-medium">{articles[currentSlide].date}</span>
+            {articles.map((article) => (
+              <article key={article.slug} className="w-full max-w-[330px]">
+                <div className="relative h-[254px] w-full mb-5">
+                  <Image
+                    src={article.image}
+                    alt={article.title}
+                    fill
+                    className="object-cover rounded-lg"
+                  />
                 </div>
-                <h3 className="font-poppins text-lg font-bold text-[#313131]">
-                  {articles[currentSlide].title}
-                </h3>
-                <p className="text-sm text-[#6E6E6E] line-clamp-3">
-                  {articles[currentSlide].description}
-                </p>
-                <div className="flex items-center justify-between pt-4">
-                  <span className="text-sm text-[#6E6E6E] font-medium">
-                    {articles[currentSlide].readTime}
-                  </span>
-                  <Link 
-                    href={`/blog/${articles[currentSlide].slug}`} 
-                    className="inline-flex items-center gap-2 text-sm font-bold text-[#313131] hover:opacity-70 transition-opacity"
-                  >
-                    Read Full
-                    <ArrowRight className="w-5 h-5" />
-                  </Link>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="text-[#4B4B4B] font-medium">{article.category}</span>
+                    <span className="text-[#6E6E6E]">·</span>
+                    <span className="text-[#6E6E6E] font-medium">{article.date}</span>
+                  </div>
+                  <h3 className="font-poppins text-lg font-bold text-[#313131]">
+                    {article.title}
+                  </h3>
+                  <p className="text-sm text-[#6E6E6E] line-clamp-3">
+                    {article.description}
+                  </p>
+                  <div className="flex items-center justify-between pt-4">
+                    <span className="text-sm text-[#6E6E6E] font-medium">
+                      {article.readTime}
+                    </span>
+                    <Link 
+                      href={`/blog/${article.slug}`} 
+                      className="inline-flex items-center gap-2 text-sm font-bold text-[#313131] hover:opacity-70 transition-opacity"
+                    >
+                      Read Full
+                      <ArrowRight className="w-5 h-5" />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </article>
+              </article>
+            ))}
           </div>
         </div>
 
@@ -149,51 +130,33 @@ export default function NowTrending() {
             <h2 className="font-poppins text-2xl font-semibold text-[#0F1935]">
               Short Reads
             </h2>
-            <div className="flex gap-4">
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-8 h-8 rounded-full border-2 border-[#282828] opacity-30 hover:opacity-100"
-                onClick={() => setShortReadsSlide(prev => Math.max(0, prev - 1))}
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-8 h-8 rounded-full border-2 border-[#282828] hover:opacity-70"
-                onClick={() => setShortReadsSlide(prev => Math.min(shortReads.length - 1, prev + 1))}
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
           </div>
 
           {/* Short Read Articles */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-            <article key={shortReadsSlide} className="flex gap-4">
-              <div className="relative h-[100px] w-[144px] flex-shrink-0">
-                <Image
-                  src={shortReads[shortReadsSlide].image}
-                  alt={shortReads[shortReadsSlide].title}
-                  fill
-                  className="object-cover rounded-lg"
-                />
-              </div>
-              <div className="flex flex-col justify-center">
-                <h3 className="font-poppins text-base font-medium text-[#020202] mb-2">
-                  {shortReads[shortReadsSlide].title}
-                </h3>
-                <p className="text-xs text-[#020202] opacity-50">
-                  {shortReads[shortReadsSlide].description}
-                </p>
-              </div>
-            </article>
+            {shortReads.map((shortRead, index) => (
+              <article key={index} className="flex flex-col gap-4">
+                <div className="relative h-[144px] w-full">
+                  <Image
+                    src={shortRead.image}
+                    alt={shortRead.title}
+                    fill
+                    className="object-contain rounded-lg"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <h3 className="font-poppins text-base font-medium text-[#020202] mb-2">
+                    {shortRead.title}
+                  </h3>
+                  <p className="text-sm text-[#020202] opacity-50">
+                    {shortRead.description}
+                  </p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </div>
     </section>
   )
 }
-
-

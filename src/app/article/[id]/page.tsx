@@ -5,7 +5,11 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { CommentsSection } from "@/components/comments-section"
 
-export default function ArticlePage({ params }: { params: { id: string } }) {
+type ArticlePageProps = {
+  params: { id: string }
+}
+
+export default function ArticlePage({ params }: ArticlePageProps) {
   const article = getArticleById(params.id)
 
   if (!article) {

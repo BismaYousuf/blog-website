@@ -18,10 +18,10 @@ export default function Hero() {
         {/* Main Content */}
         <div className="pt-[230px] max-w-xl">
           <h1 className="font-['Varela'] text-4xl md:text-6xl lg:text-[85px] leading-tight tracking-[3px] text-white mb-6">
-            Welcome to Gates
+            Welcome to BISMA BLOG
           </h1>
           <p className="font-poppins text-base md:text-lg text-[#FAFAFA] opacity-70 mb-10 max-w-[550px]">
-            Get the latest news on your favourite mangas, anime and manhwa around the world!
+          This blog is a collection of short stories and serialized tales. Dive into enchanting fantasy worlds where magic reigns supreme, or step into shadowy corners filled with unearthly horrors. New stories every week!
           </p>
 
           {/* Subscribe Form */}

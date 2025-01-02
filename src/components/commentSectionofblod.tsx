@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 interface Comment {
   id: number;
@@ -11,23 +12,29 @@ interface Comment {
 }
 
 export default function CommentSection() {
-  const [comments, setComments] = useState<Comment[]>([
-    { id: 1, author: 'John Doe', content: 'Great article! Very informative.', date: '2024-12-15' },
-    { id: 2, author: 'Jane Smith', content: 'I learned a lot from this. Thanks for sharing!', date: '2024-12-26' },
-  ]);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    const storedComments = localStorage.getItem('comments');
+    if (storedComments) {
+      setComments(JSON.parse(storedComments));
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newComment.trim() && userName.trim()) {
       const comment: Comment = {
-        id: comments.length + 1,
+        id: Date.now(),
         author: userName.trim(),
         content: newComment.trim(),
         date: new Date().toISOString().split('T')[0],
       };
-      setComments([...comments, comment]);
+      const updatedComments = [...comments, comment];
+      setComments(updatedComments);
+      localStorage.setItem('comments', JSON.stringify(updatedComments));
       setNewComment('');
       setUserName('');
     }
@@ -39,9 +46,14 @@ export default function CommentSection() {
       <div className="space-y-4 mb-8">
         {comments.map((comment) => (
           <div key={comment.id} className="bg-gray-100 p-4 rounded-lg">
-            <div className="flex justify-between items-center mb-2">
-              <span className="font-semibold">{comment.author}</span>
-              <span className="text-sm text-gray-500">{comment.date}</span>
+            <div className="flex items-center mb-2">
+              <Avatar className="h-10 w-10 mr-2">
+                <AvatarFallback>{comment.author.charAt(0).toUpperCase()}</AvatarFallback>
+              </Avatar>
+              <div className="flex-grow">
+                <span className="font-semibold">{comment.author}</span>
+                <span className="text-sm text-gray-500 ml-2">{comment.date}</span>
+              </div>
             </div>
             <p>{comment.content}</p>
           </div>

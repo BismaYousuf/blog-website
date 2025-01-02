@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Comment } from '@/app/types/article'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
@@ -13,16 +13,27 @@ interface CommentsSectionProps {
 }
 
 export function CommentsSection({ articleId, comments }: CommentsSectionProps) {
-  const [newComments, setNewComments] = useState<Comment[]>(comments)
+  const [newComments, setNewComments] = useState<Comment[]>([])
   const [author, setAuthor] = useState('')
   const [content, setContent] = useState('')
+
+  useEffect(() => {
+    const storedComments = localStorage.getItem(`comments-${articleId}`)
+    if (storedComments) {
+      setNewComments(JSON.parse(storedComments))
+    } else {
+      setNewComments(comments)
+    }
+  }, [articleId, comments])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (author.trim() && content.trim()) {
       const result = await addComment(articleId, { author, content })
-      if (result.success && result.comment) { // Check if result.comment is defined
-        setNewComments([...newComments, result.comment])
+      if (result.success && result.comment) {
+        const updatedComments = [...newComments, result.comment]
+        setNewComments(updatedComments)
+        localStorage.setItem(`comments-${articleId}`, JSON.stringify(updatedComments))
         setAuthor('')
         setContent('')
       }
@@ -62,3 +73,4 @@ export function CommentsSection({ articleId, comments }: CommentsSectionProps) {
     </div>
   )
 }
+
